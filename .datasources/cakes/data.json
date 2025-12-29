@@ -1,0 +1,68 @@
+[
+  {
+    "name": "儿童乐园",
+    "category": "儿童款",
+    "size": "6寸",
+    "flavor": "奶油",
+    "price": 128,
+    "description": "专为儿童设计的可爱造型蛋糕，色彩丰富，口感香甜",
+    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500",
+    "createdAt": "2025-12-30T00:00:00.000Z",
+    "updatedAt": "2025-12-30T00:00:00.000Z"
+  },
+  {
+    "name": "生日快乐",
+    "category": "生日款",
+    "size": "8寸",
+    "flavor": "巧克力",
+    "price": 188,
+    "description": "经典生日蛋糕，浓郁巧克力口感，适合各种生日场合",
+    "image": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500",
+    "createdAt": "2025-12-30T00:00:00.000Z",
+    "updatedAt": "2025-12-30T00:00:00.000Z"
+  },
+  {
+    "name": "浪漫婚礼",
+    "category": "婚礼款",
+    "size": "10寸",
+    "flavor": "水果",
+    "price": 388,
+    "description": "精致婚礼蛋糕，新鲜水果装饰，层次丰富，口感清爽",
+    "image": "https://images.unsplash.com/photo-1535141192434-0d989c486a85?w=500",
+    "createdAt": "2025-12-30T00:00:00.000Z",
+    "updatedAt": "2025-12-30T00:00:00.000Z"
+  },
+  {
+    "name": "圣诞惊喜",
+    "category": "节日款",
+    "size": "8寸",
+    "flavor": "提拉米苏",
+    "price": 228,
+    "description": "节日特色蛋糕，提拉米苏口味，咖啡与奶油的完美融合",
+    "image": "https://images.unsplash.com/photo-1506617420156-8e4536971650?w=500",
+    "createdAt": "2025-12-30T00:00:00.000Z",
+    "updatedAt": "2025-12-30T00:00:00.000Z"
+  },
+  {
+    "name": "芒果慕斯",
+    "category": "生日款",
+    "size": "6寸",
+    "flavor": "芒果",
+    "price": 158,
+    "description": "新鲜芒果制作，口感轻盈，果香浓郁，适合夏天享用",
+    "image": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
+    "createdAt": "2025-12-30T00:00:00.000Z",
+    "updatedAt": "2025-12-30T00:00:00.000Z"
+  },
+  {
+    "name": "卡通世界",
+    "category": "儿童款",
+    "size": "8寸",
+    "flavor": "奶油",
+    "price": 168,
+    "description": "孩子们最爱的卡通造型蛋糕，奶油口感，甜而不腻",
+    "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500",
+    "createdAt": "2025-12-30T00:00:00.000Z",
+    "updatedAt": "2025-12-30T00:00:00.000Z"
+  }
+]
