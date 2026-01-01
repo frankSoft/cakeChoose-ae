@@ -58,7 +58,7 @@ export default function Admin(props) {
       const functionName = editingCake ? 'updateCake' : 'addCake';
       const data = editingCake ? {
         ...formData,
-        id: editingCake.id
+        id: editingCake._id || editingCake.id
       } : formData;
       const result = await props.$w.cloud.callFunction({
         name: functionName,
@@ -94,9 +94,9 @@ export default function Admin(props) {
       category: cake.category,
       size: cake.size,
       flavor: cake.flavor,
-      price: cake.price,
-      description: cake.description,
-      image: cake.image
+      price: cake.price.toString(),
+      description: cake.description || '',
+      image: cake.image || ''
     });
     setShowForm(true);
   };
@@ -108,7 +108,7 @@ export default function Admin(props) {
       const result = await props.$w.cloud.callFunction({
         name: 'deleteCake',
         data: {
-          id: cake.id
+          id: cake._id || cake.id
         }
       });
       if (result.success) {
@@ -282,7 +282,7 @@ export default function Admin(props) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-amber-100">
-                {cakes.map(cake => <tr key={cake.id} className="hover:bg-amber-50">
+                {cakes.map(cake => <tr key={cake._id || cake.id} className="hover:bg-amber-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-amber-900">{cake.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-700">{cake.category}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-700">{cake.size}</td>
