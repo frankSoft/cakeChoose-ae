@@ -69,12 +69,19 @@ const getSampleData = () => [
 ];
 
 // 云函数入口函数
+const cloud = require('wx-server-sdk');
+
+// 初始化云开发
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+});
+
 exports.main = async (event, context) => {
   console.log('getCakes 云函数开始执行...');
   
   try {
     console.log('获取云开发实例...');
-    const tcb = await cloud.getCloudInstance();
+    const db = cloud.database();
     const db = tcb.database();
     
     console.log('尝试查询 cakes 集合...');

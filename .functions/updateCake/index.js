@@ -1,3 +1,10 @@
+const cloud = require('wx-server-sdk');
+
+// 初始化云开发
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+});
+
 exports.main = async (event, context) => {
   console.log('updateCake 云函数开始执行...');
   
@@ -34,8 +41,7 @@ exports.main = async (event, context) => {
     }
     
     console.log('获取云开发实例...');
-    const tcb = await cloud.getCloudInstance();
-    const db = tcb.database();
+    const db = cloud.database();
     
     const updateData = {
       name,
