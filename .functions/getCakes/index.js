@@ -1,200 +1,173 @@
+// 示例数据定义
+const getSampleData = () => [
+  {
+    name: '儿童乐园',
+    category: '儿童款',
+    size: '6寸',
+    flavor: '奶油',
+    price: 128,
+    description: '专为儿童设计的可爱造型蛋糕，色彩丰富，口感香甜',
+    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    name: '生日快乐',
+    category: '生日款',
+    size: '8寸',
+    flavor: '巧克力',
+    price: 188,
+    description: '经典生日蛋糕，浓郁巧克力口感，适合各种生日场合',
+    image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    name: '浪漫婚礼',
+    category: '婚礼款',
+    size: '10寸',
+    flavor: '水果',
+    price: 388,
+    description: '精致婚礼蛋糕，新鲜水果装饰，层次丰富，口感清爽',
+    image: 'https://images.unsplash.com/photo-1535141192434-0d989c486a85?w=500',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    name: '圣诞惊喜',
+    category: '节日款',
+    size: '8寸',
+    flavor: '提拉米苏',
+    price: 228,
+    description: '节日特色蛋糕，提拉米苏口味，咖啡与奶油的完美融合',
+    image: 'https://images.unsplash.com/photo-1506617420156-8e4536971650?w=500',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    name: '芒果慕斯',
+    category: '生日款',
+    size: '6寸',
+    flavor: '芒果',
+    price: 158,
+    description: '新鲜芒果制作，口感轻盈，果香浓郁，适合夏天享用',
+    image: 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    name: '卡通世界',
+    category: '儿童款',
+    size: '8寸',
+    flavor: '奶油',
+    price: 168,
+    description: '孩子们最爱的卡通造型蛋糕，奶油口感，甜而不腻',
+    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+];
+
 exports.main = async (event, context) => {
+  console.log('getCakes 云函数开始执行...');
+  
   try {
+    console.log('获取云开发实例...');
     const tcb = await cloud.getCloudInstance();
     const db = tcb.database();
     
-    // 检查集合是否存在，如果不存在则创建并初始化数据
+    console.log('尝试查询 cakes 集合...');
+    
     try {
       const result = await db.collection('cakes').get();
+      console.log('查询成功，数据条数:', result.data ? result.data.length : 0);
       
       // 如果集合为空，初始化示例数据
       if (!result.data || result.data.length === 0) {
-        const sampleData = [
-          {
-            id: '1',
-            name: '儿童卡通蛋糕',
-            category: '儿童款',
-            size: '8寸',
-            flavor: '奶油',
-            price: 168,
-            description: '可爱的卡通造型，深受小朋友喜爱',
-            image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '2',
-            name: '生日快乐蛋糕',
-            category: '生日款',
-            size: '10寸',
-            flavor: '水果',
-            price: 268,
-            description: '新鲜水果装饰，生日庆典首选',
-            image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '3',
-            name: '浪漫婚礼蛋糕',
-            category: '婚礼款',
-            size: '12寸',
-            flavor: '提拉米苏',
-            price: 588,
-            description: '精致优雅，婚礼完美之选',
-            image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '4',
-            name: '圣诞节日蛋糕',
-            category: '节日款',
-            size: '8寸',
-            flavor: '巧克力',
-            price: 198,
-            description: '节日氛围浓厚，甜蜜分享',
-            image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '5',
-            name: '小熊维尼蛋糕',
-            category: '儿童款',
-            size: '6寸',
-            flavor: '芒果',
-            price: 138,
-            description: '维尼熊造型，芒果口味香甜',
-            image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '6',
-            name: '经典巧克力蛋糕',
-            category: '生日款',
-            size: '8寸',
-            flavor: '巧克力',
-            price: 188,
-            description: '浓郁巧克力，经典永恒',
-            image: 'https://images.unsplash.com/photo-1612198188060-c7b2b5d9b6b5?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          }
-        ];
+        console.log('集合为空，开始初始化示例数据...');
+        
+        const sampleData = getSampleData();
+        console.log('准备插入', sampleData.length, '条示例数据');
         
         // 批量插入示例数据
         await db.collection('cakes').add(sampleData);
+        console.log('示例数据插入成功');
         
         // 重新获取数据
         const newResult = await db.collection('cakes').get();
+        console.log('重新获取数据成功，数据条数:', newResult.data ? newResult.data.length : 0);
+        
         return {
           success: true,
-          data: newResult.data || []
+          data: newResult.data || [],
+          message: '数据初始化成功'
         };
       }
       
+      console.log('直接返回现有数据');
       return {
         success: true,
-        data: result.data || []
+        data: result.data || [],
+        message: '数据获取成功'
       };
+      
     } catch (collectionError) {
-      // 如果集合不存在，创建集合并初始化数据
-      if (collectionError.message && collectionError.message.includes('Collection not exists')) {
-        const sampleData = [
-          {
-            id: '1',
-            name: '儿童卡通蛋糕',
-            category: '儿童款',
-            size: '8寸',
-            flavor: '奶油',
-            price: 168,
-            description: '可爱的卡通造型，深受小朋友喜爱',
-            image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '2',
-            name: '生日快乐蛋糕',
-            category: '生日款',
-            size: '10寸',
-            flavor: '水果',
-            price: 268,
-            description: '新鲜水果装饰，生日庆典首选',
-            image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '3',
-            name: '浪漫婚礼蛋糕',
-            category: '婚礼款',
-            size: '12寸',
-            flavor: '提拉米苏',
-            price: 588,
-            description: '精致优雅，婚礼完美之选',
-            image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '4',
-            name: '圣诞节日蛋糕',
-            category: '节日款',
-            size: '8寸',
-            flavor: '巧克力',
-            price: 198,
-            description: '节日氛围浓厚，甜蜜分享',
-            image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '5',
-            name: '小熊维尼蛋糕',
-            category: '儿童款',
-            size: '6寸',
-            flavor: '芒果',
-            price: 138,
-            description: '维尼熊造型，芒果口味香甜',
-            image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          {
-            id: '6',
-            name: '经典巧克力蛋糕',
-            category: '生日款',
-            size: '8寸',
-            flavor: '巧克力',
-            price: 188,
-            description: '浓郁巧克力，经典永恒',
-            image: 'https://images.unsplash.com/photo-1612198188060-c7b2b5d9b6b5?w=500',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          }
-        ];
+      console.log('集合操作异常:', collectionError.message);
+      
+      // 检测集合不存在的各种可能错误信息
+      const collectionNotExistErrors = [
+        'Collection not exists',
+        '集合不存在',
+        'collection not found',
+        'INVALID_COLLECTION',
+        'COLLECTION_NOT_EXIST'
+      ];
+      
+      const isCollectionNotExist = collectionNotExistErrors.some(errorMsg => 
+        collectionError.message && collectionError.message.toLowerCase().includes(errorMsg.toLowerCase())
+      );
+      
+      if (isCollectionNotExist) {
+        console.log('集合不存在，开始创建集合并初始化数据...');
         
-        // 批量插入示例数据
-        await db.collection('cakes').add(sampleData);
+        const sampleData = getSampleData();
+        console.log('准备插入', sampleData.length, '条示例数据');
         
-        // 重新获取数据
-        const result = await db.collection('cakes').get();
-        return {
-          success: true,
-          data: result.data || []
-        };
+        try {
+          // 批量插入示例数据
+          await db.collection('cakes').add(sampleData);
+          console.log('示例数据插入成功');
+          
+          // 重新获取数据
+          const result = await db.collection('cakes').get();
+          console.log('重新获取数据成功，数据条数:', result.data ? result.data.length : 0);
+          
+          return {
+            success: true,
+            data: result.data || [],
+            message: '集合创建并初始化成功'
+          };
+        } catch (insertError) {
+          console.error('插入数据失败:', insertError);
+          return {
+            success: false,
+            message: '数据初始化失败: ' + insertError.message,
+            error: insertError.message
+          };
+        }
       }
+      
+      // 其他类型的集合错误，直接抛出
       throw collectionError;
     }
+    
   } catch (error) {
-    console.error('获取蛋糕列表失败:', error);
+    console.error('getCakes 云函数执行失败:', error);
     return {
       success: false,
       message: '获取蛋糕列表失败: ' + error.message,
-      error: error.message
+      error: error.message,
+      stack: error.stack
     };
   }
 };
