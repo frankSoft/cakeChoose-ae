@@ -28,24 +28,36 @@ export default function Admin(props) {
   const loadCakes = async () => {
     try {
       setLoading(true);
+      console.log('管理员页面：开始加载蛋糕数据...');
       const result = await props.$w.cloud.callFunction({
         name: 'getCakes',
         data: {}
       });
-      if (result.success) {
-        setCakes(result.data || []);
+      console.log('管理员页面：getCakes返回结果:', result);
+      if (result && result.success) {
+        const cakeData = result.data || [];
+        console.log('管理员页面：成功加载蛋糕数据，数量:', cakeData.length);
+        setCakes(cakeData);
+        if (cakeData.length === 0) {
+          toast({
+            title: "数据初始化",
+            description: "正在为您初始化蛋糕数据...",
+            variant: "default"
+          });
+        }
       } else {
+        console.error('管理员页面：加载蛋糕失败:', result);
         toast({
           title: "加载失败",
-          description: result.message || "无法加载蛋糕信息",
+          description: result?.message || "无法加载蛋糕信息，请稍后重试",
           variant: "destructive"
         });
       }
     } catch (error) {
-      console.error('加载蛋糕失败:', error);
+      console.error('管理员页面：加载蛋糕异常:', error);
       toast({
         title: "加载失败",
-        description: "网络错误，请稍后重试",
+        description: `网络错误: ${error.message || '请稍后重试'}`,
         variant: "destructive"
       });
     } finally {
@@ -60,11 +72,17 @@ export default function Admin(props) {
         ...formData,
         id: editingCake._id || editingCake.id
       } : formData;
+      console.log('管理员页面：开始提交表单...', {
+        functionName,
+        isEdit: !!editingCake,
+        data
+      });
       const result = await props.$w.cloud.callFunction({
         name: functionName,
         data
       });
-      if (result.success) {
+      console.log('管理员页面：云函数返回结果:', result);
+      if (result && result.success) {
         toast({
           title: editingCake ? "更新成功" : "添加成功",
           description: `蛋糕"${formData.name}"已${editingCake ? '更新' : '添加'}`
@@ -72,17 +90,18 @@ export default function Admin(props) {
         resetForm();
         loadCakes();
       } else {
+        console.error('管理员页面：操作失败:', result);
         toast({
           title: "操作失败",
-          description: result.message || "操作失败，请重试",
+          description: result?.message || "操作失败，请重试",
           variant: "destructive"
         });
       }
     } catch (error) {
-      console.error('操作失败:', error);
+      console.error('管理员页面：操作异常:', error);
       toast({
         title: "操作失败",
-        description: "网络错误，请稍后重试",
+        description: `网络错误: ${error.message || '请稍后重试'}`,
         variant: "destructive"
       });
     }
@@ -104,31 +123,38 @@ export default function Admin(props) {
     if (!confirm(`确定要删除蛋糕"${cake.name}"吗？`)) {
       return;
     }
+    const cakeId = cake._id || cake.id;
+    console.log('管理员页面：开始删除蛋糕...', {
+      cakeId,
+      cakeName: cake.name
+    });
     try {
       const result = await props.$w.cloud.callFunction({
         name: 'deleteCake',
         data: {
-          id: cake._id || cake.id
+          id: cakeId
         }
       });
-      if (result.success) {
+      console.log('管理员页面：删除操作返回结果:', result);
+      if (result && result.success) {
         toast({
           title: "删除成功",
           description: `蛋糕"${cake.name}"已删除`
         });
         loadCakes();
       } else {
+        console.error('管理员页面：删除失败:', result);
         toast({
           title: "删除失败",
-          description: result.message || "删除失败，请重试",
+          description: result?.message || "删除失败，请重试",
           variant: "destructive"
         });
       }
     } catch (error) {
-      console.error('删除失败:', error);
+      console.error('管理员页面：删除异常:', error);
       toast({
         title: "删除失败",
-        description: "网络错误，请稍后重试",
+        description: `网络错误: ${error.message || '请稍后重试'}`,
         variant: "destructive"
       });
     }
