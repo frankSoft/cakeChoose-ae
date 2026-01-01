@@ -68,6 +68,7 @@ const getSampleData = () => [
   }
 ];
 
+// 云函数入口函数
 exports.main = async (event, context) => {
   console.log('getCakes 云函数开始执行...');
   
